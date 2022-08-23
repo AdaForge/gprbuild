@@ -38,8 +38,8 @@ Optional
 When compiling, you can choose whether you want to link statically with XML/Ada
 (the default), or dynamically. To compile dynamically, you should run:
 
-```Make
-make LIBRARY_TYPE=relocatable all
+```Shell
+gmake LIBRARY_TYPE=relocatable all
 ```
 
 ### Sample
@@ -68,10 +68,11 @@ Go through the other steps after a clean-up of the build
 
 ### `0.a` Get the software
 
+From [Adaforge.org](https://www.Adaforge.org) [GitHub repository](https://github.com/AdaForge)
 ```Shell
-git pull https://github.com/AdaCore/gprbuild.git 
-git pull https://github.com/AdaCore/gprconfigure_kb.git 
-git pull https://github.com/AdaCore/xmlada.git 
+git pull https://github.com/AdaForge/gprbuild.git 
+git pull https://github.com/AdaForge/gprconfigure_kb.git 
+git pull https://github.com/AdaForge/xmlada.git 
 ```
 
 ### `0.b` Set environment variables
@@ -86,7 +87,7 @@ cd gprbuild/build
 
 ```Shell
 cd gprbuild/build
-../bootstrap.sh --with-xmlada=../../xmlada.git --with-kb=../../gprconfig_kb.git --prefix=./bootstrap --srcdir=..
+../bootstrap.sh --with-xmlada=../../xmlada --with-kb=../../gprconfig_kb --prefix=./bootstrap --srcdir=..
 ```
 
 ### `2.` Prepare build = Configure the `Makefile`
@@ -107,13 +108,12 @@ gmake -f ../Makefile all
 
 ```Shell
 cd ..
-make clean  # cleanup
+gmake clean
 ```
 or more straightforward:
 ```Shell
 cd ..
 rm -r build
-
 ```
 
 # Doc & Examples
