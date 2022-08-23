@@ -26,7 +26,7 @@ All merits go to [Adacore](https://www.Adacore.com)'s Team.
 ## Configuration as code
 
 * Build directory is a sub-directory of the gprbuild project
-* gprconfig and xmlada are located at thi same level as gprbuild
+* `gprconfig_kb` and `xmlada` are located at the same level as `gprbuild`
 * `GPR_PROJECT_PATH` defaults to `/home/william/usr/local/share/gpr`
 
 
