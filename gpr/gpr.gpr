@@ -46,7 +46,7 @@ library project GPR is
    --------------
 
    package Compiler is
-      Common_Switches := ("-gnat2020", "-gnaty", "-gnatQ", "-gnata");
+      Common_Switches := ("-gnat2022", "-gnaty", "-gnatQ", "-gnata");
 
       case Bld is
          when "debug" =>
