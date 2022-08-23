@@ -5,7 +5,7 @@ the software on exotic(!) OS systems as `macOS` & `FreeBSD`.
 
 Aim is to have a working bootstrap on those plateforms.
 
-## Major diffs with AdaCore's version
+### Major diffs with AdaCore's version
 
 * up to date info about version #, date and year
 * all build artefacts will lay in an dedicated  build directory
@@ -82,27 +82,27 @@ mkdir -p gprbuild/build
 cd gprbuild/build
 ```
 
-### 1. Build a first temporary `gprbuild` (ligth) = Bootstrap
+### `1.` Build a first temporary `gprbuild` (ligth) = Bootstrap
 
 ```Shell
 cd gprbuild/build
 ../bootstrap.sh --with-xmlada=../../xmlada.git --with-kb=../../gprconfig_kb.git --prefix=./bootstrap --srcdir=..
 ```
 
-### 2. Prepare build = Configure the `Makefile`
+### `2.` Prepare build = Configure the `Makefile`
 * you are in `.../gprbuild/build`
 ```Shell
 gmake -f ../Makefile prefix=/Store/users/william/usr/local SOURCE_DIR=.. setup
 ```
 
-### 3. Launch the build of the full `gprbuild`
+### `3.` Launch the build of the full `gprbuild`
 * you are in `.../gprbuild/build`
 ```Shell
 gmake -f ../Makefile all
 (sudo) gmake -f ../Makefile install
 ```
 
-### 99. Clean-up
+### `99.` Clean-up
 * you are in `.../gprbuild/build`
 
 ```Shell
