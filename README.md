@@ -1,78 +1,111 @@
-Preliminary note for Windows users
-==================================
+# gprbuild from AdaCore
 
-The build instructions for `gprbuild` may have a slight UNIX flavor but they can
-be used on Windows platforms with a full Cygwin installation. The latter makes
-it simpler to build `gprbuild` but is not required to use it.
+This fork is a (slight) rework of the installation scripts and process as to build 
+the software on exotic(!) OS systems as '''macOS''' & '''FreeBSD'''.
 
-Bootstrapping
-=============
+Aim si to have a working bootstrap on those plateforms.
 
-`gprbuild` needs `gprbuild` to build... So we also provide a way to
-easily bootstrap if you don't already have `gprbuild`, provided you
-already have installed GNAT.
+## Major diffs with AdaCore's version
 
-Download XML/Ada sources (from https://github.com/AdaCore/xmlada), together
-with the gprconfig knowledge base (from
-https://github.com/AdaCore/gprconfig_kb).
+* up to date info about version #, date and year
+* all build artefacts will lay in an dedicated  build directory
+* corrected some gcc compiler switch typos in `*.gpr` files (`-gnat2022`)
+* clean-up `.gitignore` file
 
-Run the `bootstrap.sh` script (written for POSIX systems) specifying the
-install location and the sources of `XML/Ada` and `gprconfig_kb`. The script
-will build *and* install `gprbuild`.
+## gprbuild Prerequisites
 
-For example, to build `gprbuild` and install it to `./bootstrap` in the current
-working directory, run:
+* Ada compiler. I use `gcc` (from GNU FSF)
+* [gprconfig_kb](https://github.com/AdaCore/gprconfigure_kb)
+* [xmlada](https://github.com/AdaCore/xmlada)
 
-    $ ./bootstrap.sh --with-xmlada=../xmlada --with-kb=../gprconfig_kb --prefix=./bootstrap
+## Configuration as code
 
-For maintainers, the environment `DESTDIR` is honoured for staged installs, see
-`./bootstrap.sh -h` for more.
+* Build directory is a sub-directory of the gprbuild project
+* gprconfig and xmlada are located at thi same level as gprbuild
+* `GPR_PROJECT_PATH` defaults to `/home/william/usr/local/share/gpr`
 
-With this bootstrapped `gprbuild`, you can build XML/Ada and `gprbuild`
-as documented below.
 
-Configuring
-===========
+## Environment vaiables
 
-You should first configure the build like this (if you plan to build in
-the source tree directly, you can omit setting the SOURCE_DIR variable):
+`DISTDIR=`your installation location WITH a TRAILING slash '/'; defaults to `/usr/local`
 
-    $ make prefix=xxx SOURCE_DIR=/path/to/gprbuild/sources setup
+Optional
+`CC=`(...your C/Ada compiler)
+`CXX=`(...your C++ compiler)
+`GNATMAKE=`(...your C/Ada compiler)
 
-Building and Installing
-=======================
+### Sample
 
-XML/Ada must be installed before building.
+'''Shell
+export DISTDIR=/users/william
+export CC=/home/william/usr/local/gcc-12.2.0/bin/gcc
+export CXX=/home/william/usr/local/gcc-12.2.0/bin/g++
+export GNATMAKE=/home/william/usr/local/gcc-12.2.0/bin/gnatmake
+'''
 
-Building the main executables is done simply with:
+### FreeBSD tweek
 
-    $ make all
+`export  GNATMAKEFLAGS=-L/usr/lib`
+or for permanent
+'''Shell
+ln -sv /usr/lib/libpthread.* /home/william/usr/local/gcc-12.2.0/lib/gcc/x86_64-unknown-freebsd13.1/12.2.0/adalib
+ln -sv /usr/lib/libc.* /home/william/usr/local/gcc-12.2.0/lib/gcc/x86_64-unknown-freebsd13.1/12.2.0/adalib
+'''
+
+## Steps
+
+### 0.a Prerequisites - get the software
+
+'''Shell
+git pull https://github.com/AdaCore/gprbuild.git 
+git pull https://github.com/AdaCore/gprconfigure_kb.git 
+git pull https://github.com/AdaCore/xmlada.git 
+'''
+
+### 0.b Set environment variables
+
+'''Shell
+export  GNATMAKEFLAGS=-L/usr/lib
+mkdir build
+build
+'''
+
+### 1. Build a first temporary `gprbuild` (ligth) = Bootstrap
+
+'''Shell
+../bootstrap.sh --with-xmlada=../../xmlada.git --with-kb=../../gprconfig_kb.git --prefix=./bootstrap --srcdir=..
+'''
+
+### 2. Prepare gprbuild = Conifigure the `Makefile`
+
+'''Shell
+gmake -f ../Makefile prefix=/Store/users/william/usr/local SOURCE_DIR=.. setup
+'''
+
+### 3. Build the full `gprbuild`
+
+'''Shell
+gmake -f ../Makefile all
+(sudo) gmake -f ../Makefile install
+'''
+
+### 99. Clean-up
+
+'''Shell
+make clean  # cleanup
+'''
+
 
 When compiling, you can choose whether you want to link statically with XML/Ada
 (the default), or dynamically. To compile dynamically, you should run:
 
     $ make LIBRARY_TYPE=relocatable all
 
-instead of the above.
 
-Installation is done with:
-
-    $ make install
-
-Doc & Examples
+# Doc & Examples
 ==============
+[online at AdaCore](http://docs.adacore.com/gprbuild-docs/html/gprbuild_ug.html).
 
-The documentation is provided in various formats in the `doc` subdirectory. You
-can also find it
-[online](http://docs.adacore.com/gprbuild-docs/html/gprbuild_ug.html).
-
-It refers to concrete examples that are to be found in the `examples`
-subdirectory. Each example can be built easily using the simple attached
-Makefile:
-
-    $ make all    # build the example
-    $ make run    # run the executable(s)
-    $ make clean  # cleanup
-
-All the examples can be `built/run/cleaned` using the same targets and the top
-level examples Makefile.
+## Prerequisites
+=============
+TBD
