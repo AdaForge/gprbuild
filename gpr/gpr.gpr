@@ -26,8 +26,8 @@ library project GPR is
    Bld : Build_Type := external ("GPR_BUILD",
                                  external ("BUILD", "production"));
 
-   type Target_type is ("Windows_NT", "UNIX");
-   Target : Target_Type := external ("OS", "UNIX");
+   type Target_type is ("Windows_NT", "UNIX", "macOS");
+   Target : Target_Type := external ("OS", "macOS");
 
    type Library_Type_Type is ("relocatable", "static", "static-pic");
    Gnat_Lib_Type : Library_Type_Type := external ("LIBRARY_TYPE", "static");
@@ -46,7 +46,7 @@ library project GPR is
    --------------
 
    package Compiler is
-      Common_Switches := ("-gnat2020", "-gnaty", "-gnatQ", "-gnata");
+      Common_Switches := ("-gnat2022", "-gnaty", "-gnatQ", "-gnata");
 
       case Bld is
          when "debug" =>
@@ -86,6 +86,9 @@ library project GPR is
          when "UNIX" =>
              for Body ("GPR.Util.Put_Resource_Usage")
                use "gpr-util-put_resource_usage__unix.adb";
+         when "macOS" =>
+             for Body ("GPR.Util.Put_Resource_Usage")
+               use "gpr-util-put_resource_usage__macos.adb";
       end case;
    end Naming;
 
