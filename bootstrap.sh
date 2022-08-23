@@ -3,7 +3,7 @@
 
 progname=bootstrap
 
-prefix=/usr/local
+prefix=/Library/Developer
 bindir=/bin
 datarootdir=/share
 libexecdir=/libexec

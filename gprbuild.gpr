@@ -25,8 +25,8 @@ project Gprbuild is
    Bld : Build_Type := external ("GPRBUILD_BUILD",
                                  external ("BUILD", "debug"));
 
-   type Target_type is ("Windows_NT", "UNIX");
-   Target : Target_Type := external ("OS", "UNIX");
+   type Target_type is ("Windows_NT", "UNIX","macOS" );
+   Target : Target_Type := external ("OS", "macOS");
 
    type Install_Mode_Type is ("all", "nointernal", "internal");
    Install_Mode : Install_Mode_Type := external ("INSTALL_MODE", "all");
@@ -165,6 +165,8 @@ project Gprbuild is
                when "Windows_NT" =>
                   for Artifacts ("bin") use ("src/gprinstall.exe.manifest");
                when "UNIX" =>
+                  for Artifacts (".") use ("doinstall");
+               when "macOS" =>
                   for Artifacts (".") use ("doinstall");
             end case;
 
