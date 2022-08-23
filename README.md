@@ -55,7 +55,7 @@ gmake LIBRARY_TYPE=relocatable all
 ### Sample
 
 * on FreeBSD
-* 
+
 ```Shell
 export DISTDIR=/users/william/
 export CC=/home/william/usr/local/gcc-12.2.0/bin/gcc
