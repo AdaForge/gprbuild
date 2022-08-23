@@ -25,9 +25,14 @@ All merits go to [Adacore](https://www.Adacore.com)'s Team.
 
 ## Configuration as code
 
-* Build directory is a sub-directory of the gprbuild project
+* `DESTDIR` / `PREFIX` : I personnaly install exprimental dev-tools in my `/home` - `/Users` directory
+  *   typicaly on FreeBSD : `/home/william/usr/local`
+  *   typicaly on macOS : `/Users/william/Library/Developer/GNAT`
 * `gprconfig_kb` and `xmlada` are located at the same level as `gprbuild`
-* `GPR_PROJECT_PATH` defaults to `/home/william/usr/local/share/gpr`
+* Build directory is a sub-directory of the gprbuild project’ named `build`
+* `GPR_PROJECT_PATH` is not set’ and defaults in my case to 
+   * on FreeBSD : `/home/william/usr/local/share/gpr`
+   * on macOS : `/Users/william/Library/Developer/GNAT/share/gpr`
 
 
 ## Environment vaiables
@@ -49,11 +54,23 @@ gmake LIBRARY_TYPE=relocatable all
 
 ### Sample
 
+* on FreeBSD
+* 
 ```Shell
-export DISTDIR=/users/william
+export DISTDIR=/users/william/
 export CC=/home/william/usr/local/gcc-12.2.0/bin/gcc
 export CXX=/home/william/usr/local/gcc-12.2.0/bin/g++
 export GNATMAKE=/home/william/usr/local/gcc-12.2.0/bin/gnatmake
+```
+
+* on MacOS
+
+```Shell
+export DISTDIR=/Users/william/Library/Developer/
+PREFIX=GNAT
+export CC=/Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/gcc
+export CXX=Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/g++
+export GNATMAKE=Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/gnatmake
 ```
 
 ### FreeBSD tweek
