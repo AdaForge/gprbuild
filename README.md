@@ -5,7 +5,7 @@ the software on exotic(!) OS systems as `macOS` & `FreeBSD`.
 
 Aim is to have a working bootstrap on those plateforms.
 
-Brougth to you by [AdaForge](https://www.Adaforge.org).
+Brought to you by [AdaForge](https://www.Adaforge.org).
 
 All merits go to [Adacore](https://www.Adacore.com)'s Team.
 
