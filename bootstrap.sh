@@ -9,8 +9,8 @@ datarootdir=/share
 libexecdir=/libexec
 
 srcdir=$PWD
-xmlada_src=../xmlada
-kb_src=../gprconfig_kb
+xmlada_src=../../xmlada.git
+kb_src=../../gprconfig_kb.git
 
 CC=${CC:-cc}
 GNATMAKE=${GNATMAKE:-gnatmake}
@@ -38,7 +38,7 @@ Options [defaults in brackets]:
 Environment variables:
   CC                 specify C compiler [$CC]
   CFLAGS             set C and Ada compilation flags [$CFLAGS]
-  DESTDIR            optional for staged installs
+  DESTDIR            optional for staged installs, MUST end with a '/'
   GNATMAKE           specify gnatmake Ada builder [$GNATMAKE]
   GNATMAKEFLAGS      additional Ada builder flags [$GNATMAKEFLAGS]
 EOF
@@ -88,7 +88,7 @@ cp -r "$kb_src"/db "$srcdir"/share/gprconfig
 # Windows and Unix differencies
 
 UName=`uname | cut -b -5`
-PutUsage=gpr/src/gpr-util-put_resource_usage
+PutUsage="$srcdir"/gpr/src/gpr-util-put_resource_usage
 
 rm -f ${PutUsage}.adb
 
@@ -96,7 +96,7 @@ if [ "$UName" = "CYGWI" ] || [ "$UName" = "MINGW" ]
 then
 	cp ${PutUsage}__null.adb ${PutUsage}.adb
 else
-	ln -s $PWD/${PutUsage}__unix.adb ${PutUsage}.adb
+	ln -s gpr-util-put_resource_usage__unix.adb ${PutUsage}.adb
 fi
 
 # Build
