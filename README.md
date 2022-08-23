@@ -5,6 +5,11 @@ the software on exotic(!) OS systems as `macOS` & `FreeBSD`.
 
 Aim is to have a working bootstrap on those plateforms.
 
+Brougth to you by [AdaForge](https://www.Adaforge.org).
+
+All merits go to [Adacore](https://www.Adacore.com)'s Team.
+
+
 ### Major diffs with AdaCore's version
 
 * up to date info about version #, date and year
@@ -68,7 +73,7 @@ Go through the other steps after a clean-up of the build
 
 ### `0.a` Get the software
 
-From [Adaforge.org](https://www.Adaforge.org) [GitHub repository](https://github.com/AdaForge)
+From [Adaforge.org](https://www.Adaforge.org)'s [GitHub repository](https://github.com/AdaForge)
 ```Shell
 git pull https://github.com/AdaForge/gprbuild.git 
 git pull https://github.com/AdaForge/gprconfigure_kb.git 
