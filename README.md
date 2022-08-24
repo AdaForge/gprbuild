@@ -35,7 +35,7 @@ All merits go to [Adacore](https://www.Adacore.com)'s Team.
    * on macOS : `/Users/william/Library/Developer/GNAT/share/gpr`
 
 
-## Environment vaiables
+## Environment variables
 
 `DISTDIR=`your installation location WITH a TRAILING slash '/'; defaults to `/usr/local`
 
@@ -66,7 +66,7 @@ export GNATMAKE=/home/william/usr/local/gcc-12.2.0/bin/gnatmake
 * on MacOS
 
 ```Shell
-export DISTDIR=/Users/william/Library/Developer/
+export DESTDIR=/Users/william/Library/Developer/
 PREFIX=GNAT
 export CC=/Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/gcc
 export CXX=Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/g++
@@ -91,6 +91,7 @@ Go through the other steps after a clean-up of the build
 ### `0.a` Get the software
 
 From [Adaforge.org](https://www.Adaforge.org)'s [GitHub repository](https://github.com/AdaForge)
+
 ```Shell
 git pull https://github.com/AdaForge/gprbuild.git 
 git pull https://github.com/AdaForge/gprconfigure_kb.git 
@@ -100,16 +101,32 @@ git pull https://github.com/AdaForge/xmlada.git
 ### `0.b` Set environment variables
 
 ```Shell
-export  GNATMAKEFLAGS=-L/usr/lib
-mkdir -p gprbuild/build
-cd gprbuild/build
+export DISTDIR=/.../
+```
+
+* optional
+
+```Shell
+export CC=/.../bin/gcc
+export CXX=/.../bin/g++
+export GNATMAKE=/.../bin/gnatmake
 ```
 
 ### `1.` Build a first temporary `gprbuild` (ligth) = Bootstrap
 
 ```Shell
+mkdir -p gprbuild/build
 cd gprbuild/build
-../bootstrap.sh --with-xmlada=../../xmlada --with-kb=../../gprconfig_kb --prefix=./bootstrap --srcdir=..
+../bootstrap.sh --with-xmlada=../../xmlada --with-kb=../../gprconfig_kb --prefix=./bootstrap --srcdir=.. --build
+(sudo) ../bootstrap.sh --prefix=./bootstrap --srcdir=.. --install
+```
+
+* short form
+```Shell
+mkdir -p gprbuild/build
+cd gprbuild/build
+../bootstrap.sh  --build
+(sudo) ../bootstrap.sh  --install
 ```
 
 ### `2.` Prepare build = Configure the `Makefile`
