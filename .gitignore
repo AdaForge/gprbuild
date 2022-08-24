@@ -1,8 +1,10 @@
+.DS_Store
 .vscode/
 alire/
-build/
 gpr/src/gpr-util-put_resource_usage.adb
+# build artefacts
+share/gprconfig/
+build/
 config/obj/
 gpr/lib/
 gpr/libobj/
-.DS_Store
