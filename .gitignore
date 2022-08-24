@@ -1,7 +1,8 @@
+.vscode/
+alire/
 build/
 gpr/src/gpr-util-put_resource_usage.adb
 config/obj/
 gpr/lib/
 gpr/libobj/
-makefile.setup
-share/gprconfig/
+.DS_Store
