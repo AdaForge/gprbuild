@@ -4,7 +4,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = .
+BUILDDIR      = ../build/doc
 SOURCEDIR     = .
 
 # Internal variables.
@@ -47,7 +47,7 @@ html: force
 pdf: force
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/pdf
 	cp $(SOURCEDIR)/share/sphinx.sty $(BUILDDIR)/pdf
-	$(MAKE) -C $(BUILDDIR)/pdf all-pdf LATEXOPTS="-interaction=nonstopmode"
+	-$(MAKE) -C $(BUILDDIR)/pdf all-pdf LATEXOPTS="-interaction=nonstopmode"
 
 txt: force
 	$(SPHINXBUILD) -b texinfo $(ALLSPHINXOPTS) $(BUILDDIR)/$*/txt
