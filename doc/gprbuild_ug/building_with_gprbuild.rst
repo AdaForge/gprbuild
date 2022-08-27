@@ -291,6 +291,8 @@ package Builder of the main project:
   specified with :samp:`--autoconf=` exists, then it is
   used. Otherwise, GPRconfig is invoked to create it automatically.
 
+.. option:: -target
+
 * :samp:`--target={targetname}`
 
   This specifies that the default configuration project file is
@@ -383,6 +385,8 @@ package Builder of the main project:
   to binding. It is only provided to improve performance, when it is known
   that the resulting binding files will be the same as the previous ones.
 
+.. option:: -aP
+
 * :samp:`-aP {dir}` (Add directory :file:`dir` to project search path)
 
   Specify to GPRbuild to add directory :file:`dir` to the user project file search
@@ -420,6 +424,8 @@ package Builder of the main project:
   error message. When switch :samp:`-F` is used, the full path of the project
   file is used. This switch has no effect when switch :samp:`-v` is used.
 
+.. option:: -o
+
 * :samp:`-o {name}` (Choose an alternate executable name)
 
   Specify the file name of the executable. Switch :samp:`-o` can
@@ -427,6 +433,8 @@ package Builder of the main project:
   that is, there is exactly one main on the command line,
   or there are no mains on the command line and exactly one
   main in attribute `Main` of the main project.
+
+.. option:: -P
 
 * :samp:`-P {proj}` (use Project file *proj*)
 
@@ -463,6 +471,8 @@ package Builder of the main project:
   except when there are errors. This default behavior is obtained with switch
   :samp:`-vP0`. Switches :samp:`-vP1` and :samp:`-vP2` yield increasingly
   detailed output.
+
+.. option:: -X
 
 * :samp:`-Xnm={val}` (Specify an external reference for Project Files)
 
@@ -505,6 +515,8 @@ package Builder of the main project (attribute Switches):
 
   When linking an executable, if supported by the platform, create a map file
   with file name :file:`map file`.
+
+.. option:: --no-indirect-imports
 
 * :samp:`--no-indirect-imports`
 
@@ -595,6 +607,8 @@ package Builder of the main project (attribute Switches):
   different. Note that for the case when source code contains preprocessing
   directives, this switch has the same effect as -f.
 
+.. option:: -p
+
 * :samp:`-p` or :samp:`--create-missing-dirs` (Create missing object, library and exec directories)
 
   By default, GPRbuild checks that the object, library and exec directories
@@ -626,6 +640,8 @@ package Builder of the main project (attribute Switches):
   invokes a compiler, it writes a text file that lists the switches used in the
   invocation of the compiler, so that it can retrieve these switches if
   :samp:`-s` is used later.
+
+.. option:: -v
 
 * :samp:`-v` (Verbose output)
 
@@ -678,6 +694,9 @@ command line or in the Builder Ada switches in the main project file:
 * :samp:`-fstack-check`
 * :samp:`-fno-inline`
 * :samp:`-g{*}` Any switch starting with :samp:`-g`
+
+.. option:: -O0, -O2
+
 * :samp:`-O{*}` Any switch starting with :samp:`-O`
 
 
