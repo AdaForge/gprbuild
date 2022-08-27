@@ -3,19 +3,6 @@
 
 progname=bootstrap
 
-# Defaults of some OS specific installation values
-THIS_OS=$(uname -s)
-case $THIS_OS in
-	Unix | FreeBSD | Linux)
-		prefix=/usr/local
-		;;
-	macOS | OSX | Darwin )
-		prefix=/Library/Developer
-		THIS_OS="macOS"
-		;;
-	# Windows
-esac
-
 CC=${CC:-cc}
 GNATMAKE=${GNATMAKE:-gnatmake}
 CFLAGS=${CFLAGS:-$CFLAGS}
@@ -26,6 +13,7 @@ bindir=/bin
 datarootdir=/share
 libexecdir=/libexec
 
+blddir=$PWD
 srcdir=$PWD/..
 
 if [ -d "../../xmlada" ]; then
@@ -35,7 +23,6 @@ elif [ -d "../../xmlada.git" ]; then
 elif [ -d "../xmlada"]; then
 	xmlada_src=../xmlada
 fi
-echo "xmlada_src" = $xmlada_src
 if [ -d "../../gprconfig_kb" ]; then
 	kb_src="../../gprconfig_kb"
 elif [ -d "../../gprconfig_kb.git" ]; then
@@ -43,7 +30,6 @@ elif [ -d "../../gprconfig_kb.git" ]; then
 elif [ -d "../gprconfig_kb" ]; then
 	kb_src="../gprconfig_kb"
 fi
-echo "kb_src" = $kb_src
 
 usage() {
     cat >&2 <<EOF
@@ -88,8 +74,8 @@ while :; do
         --srcdir=?*)      srcdir=${1#*=} ;;
         --with-xmlada=?*) xmlada_src=${1#*=} ;;
         --with-kb=?*)     kb_src=${1#*=} ;;
-	--build)          MODE="build";;
-	--install)        MODE="install";;
+        --build)          MODE="build";;
+        --install)        MODE="install";;
 
         -h|-\?|--help)    usage ;;
 
@@ -128,17 +114,16 @@ then
 
 	# Install the gprconfig knowledge base
 	rm -rf "$srcdir"/share/gprconfig
-#	mkdir -p "$srcdir"/share
 	cp -rv "$kb_src"/db "$srcdir"/share/gprconfig
 
 	command $CC -c $CFLAGS "$srcdir"/gpr/src/gpr_imports.c
 
 	for bin in $bin_progs; do
-		command $GNATMAKE $inc_flags "$bin"-main -o "$bin" $CFLAGS $GNATMAKEFLAGS -largs gpr_imports.o
+		command $GNATMAKE $inc_flags "$bin"-main -o "$bin" -p -D obj $CFLAGS $GNATMAKEFLAGS -largs gpr_imports.o
 	done
 
 	for lib in $lib_progs; do
-		command $GNATMAKE $inc_flags "$lib" $CFLAGS $GNATMAKEFLAGS -largs gpr_imports.o
+		command $GNATMAKE $inc_flags "$lib" $CFLAGS  -p -D obj $GNATMAKEFLAGS -largs gpr_imports.o
 	done
 fi;
 
@@ -151,9 +136,11 @@ then
 	mkdir -p "$DESTDIR$prefix$datarootdir"/gprconfig
 	mkdir -p "$DESTDIR$prefix$datarootdir"/gpr
 
-	install -m0755 $bin_progs "$DESTDIR$prefix$bindir"
-	install -m0755 $lib_progs "$DESTDIR$prefix$libexecdir"/gprbuild
-	install -m0644 "$srcdir"/share/gprconfig/*.xml "$DESTDIR$prefix$datarootdir"/gprconfig
-	install -m0644 "$srcdir"/share/gprconfig/*.ent "$DESTDIR$prefix$datarootdir"/gprconfig
-	install -m0644 "$srcdir"/share/_default.gpr "$DESTDIR$prefix$datarootdir"/gpr/_default.gpr
+	ls -d "$DESTDIR$prefix$bindir"
+	
+	install -v -m0755 $bin_progs "$DESTDIR$prefix$bindir"
+	install -v -m0755 $lib_progs "$DESTDIR$prefix$libexecdir"/gprbuild
+	install -v -m0644 "$srcdir"/share/gprconfig/*.xml "$DESTDIR$prefix$datarootdir"/gprconfig
+	install -v -m0644 "$srcdir"/share/gprconfig/*.ent "$DESTDIR$prefix$datarootdir"/gprconfig
+	install -v -m0644 "$srcdir"/share/_default.gpr "$DESTDIR$prefix$datarootdir"/gpr/_default.gpr
 fi
