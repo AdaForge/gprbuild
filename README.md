@@ -9,7 +9,6 @@ Brought to you by [AdaForge](https://www.Adaforge.org).
 
 All merits go to [Adacore](https://www.Adacore.com)'s Team.
 
-
 ### Major diffs with AdaCore's version
 
 * up to date info about version #, date and year
@@ -17,11 +16,12 @@ All merits go to [Adacore](https://www.Adacore.com)'s Team.
 * corrected some gcc compiler switch typos in `*.gpr` files (`-gnat2022`)
 * clean-up `.gitignore` file
 
-## gprbuild Prerequisites
+## Prerequisites
 
 * Ada compiler. I use `gcc` (from GNU FSF)
 * [gprconfig_kb](https://github.com/AdaCore/gprconfigure_kb)
 * [xmlada](https://github.com/AdaCore/xmlada)
+
 
 ## Configuration as code
 
@@ -37,7 +37,9 @@ All merits go to [Adacore](https://www.Adacore.com)'s Team.
 
 ## Environment variables
 
-`DISTDIR=`your installation location WITH a TRAILING slash '/'; defaults to `/usr/local`
+`DESTDIR=`your installation location WITH a TRAILING slash '/'; defaults to `/usr/local`
+export ADA_PROJECT_PATH=..
+unset PRJ_PROJECT_PATH
 
 Optional
 `CC=`(...your C/Ada compiler)
@@ -57,7 +59,9 @@ gmake LIBRARY_TYPE=relocatable all
 * on FreeBSD
 
 ```Shell
-export DISTDIR=/users/william/
+export ADA_PROJECT_PATH=..
+unset PRJ_PROJECT_PATH
+export DESTDIR=/users/william/
 export CC=/home/william/usr/local/gcc-12.2.0/bin/gcc
 export CXX=/home/william/usr/local/gcc-12.2.0/bin/g++
 export GNATMAKE=/home/william/usr/local/gcc-12.2.0/bin/gnatmake
@@ -66,11 +70,13 @@ export GNATMAKE=/home/william/usr/local/gcc-12.2.0/bin/gnatmake
 * on MacOS
 
 ```Shell
+export ADA_PROJECT_PATH=..
+unset PRJ_PROJECT_PATH
 export DESTDIR=/Users/william/Library/Developer/
 PREFIX=GNAT
 export CC=/Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/gcc
-export CXX=Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/g++
-export GNATMAKE=Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/gnatmake
+export CXX=/Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/g++
+export GNATMAKE=/Users/william/Library/Developer/GNAT/gcc-12.2.0/bin/gnatmake
 ```
 
 ### FreeBSD tweek
@@ -101,7 +107,9 @@ git pull https://github.com/AdaForge/xmlada.git
 ### `0.b` Set environment variables
 
 ```Shell
-export DISTDIR=/.../
+export ADA_PROJECT_PATH=..
+unset PRJ_PROJECT_PATH
+export DESTDIR=/.../
 ```
 
 * optional
@@ -115,8 +123,9 @@ export GNATMAKE=/.../bin/gnatmake
 ### `1.` Build a first temporary `gprbuild` (ligth) = Bootstrap
 
 ```Shell
-mkdir -p gprbuild/build
-cd gprbuild/build
+cd gprbuild
+mkdir -p build
+cd build
 ../bootstrap.sh --with-xmlada=../../xmlada --with-kb=../../gprconfig_kb --prefix=./bootstrap --srcdir=.. --build
 (sudo) ../bootstrap.sh --prefix=./bootstrap --srcdir=.. --install
 ```
@@ -126,23 +135,36 @@ cd gprbuild/build
 mkdir -p gprbuild/build
 cd gprbuild/build
 ../bootstrap.sh  --build
-(sudo) ../bootstrap.sh  --install
+(sudo) ../bootstrap.sh  --prefix=/.../ --install
+```
+
+### `2.` Build  `xmlada`
+
+* you are in `.../xmlada/build`. or `.../xmlada.git/build`
+```Shell
+../configure --prefix=/.../
+gmake all
+(sudo) gmake install
 ```
 
 ### `2.` Prepare build = Configure the `Makefile`
+
 * you are in `.../gprbuild/build`
 ```Shell
-gmake -f ../Makefile prefix=/Store/users/william/usr/local SOURCE_DIR=.. setup
+gmake -f ../Makefile prefix=/Library/Developer/GNAT SOURCE_DIR=.. ENABLE_SHARED=no setup
 ```
 
 ### `3.` Launch the build of the full `gprbuild`
+
 * you are in `.../gprbuild/build`
 ```Shell
+export ADA_PROJECT_PATH=..:/Library/Developer/GNAT/share/gpr
 gmake -f ../Makefile all
 (sudo) gmake -f ../Makefile install
 ```
 
 ### `99.` Clean-up
+
 * you are in `.../gprbuild/build`
 
 ```Shell
@@ -156,7 +178,32 @@ rm -r build
 ```
 
 # Doc & Examples
+
 [online at AdaCore](http://docs.adacore.com/gprbuild-docs/html/gprbuild_ug.html).
 
 ## Prerequisites
-TBD
+
+In order to build the docs, you need to have the following tools installed:
+
+* `sphinx` -> `pip install sphinx`
+* `latexmk`and `texlive-latex-extra`  
+  * [macOS] -> `sudo port install latexmk texlive-latex-extra `
+  * [FreeBSD] -> `sudo pkg install latexmk texlive-latex-extra `
+* [gsftopk](https://math.berkeley.edu/~vojta/gsftopk.html)
+
+## updating LaTex environment
+
+```Shell
+sudo texhash
+```
+
+### Style defs
+
+    * [TeX Gyre Termes](https://www.gust.org.pl/projects/e-foundry/tex-gyre/termes/index_html)
+    * [TeX Gyre Heros](https://www.gust.org.pl/projects/e-foundry/tex-gyre/heros)
+    * [sphinxmulticell.sty](https://github.com/Crashedmind/PlantUMLHitchhikersGuide/blob/master/sphinxmulticell.sty)
+    * [footnotehyper-sphinx.sty](https://github.com/Crashedmind/PlantUMLHitchhikersGuide/blob/master/sphinxmulticell.sty)
+
+### Fonts
+
+* /opt/local/share/texmf-texlive/fonts/tfm/public/tex-gyre/ec-qhvbi.tfm
