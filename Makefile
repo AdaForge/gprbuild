@@ -40,7 +40,7 @@ LIB_DIR       = lib/
 # target options for cross-build
 ifeq ($(HOST),$(TARGET))
 GTARGET=
-# INSTALLER=exe/$(BUILD)/$(LIB_INSTALLER)
+# INSTALLER=$(BUILD)/exe/$(LIB_INSTALLER)
 else
 GTARGET=--target=$(TARGET)
 endif
@@ -219,7 +219,7 @@ endif
 .PHONY: doc examples
 
 doc:
-	make -C $(MAKEPREFIX)doc
+	-make -C $(MAKEPREFIX)doc
 
 examples: force
 	make -C $(MAKEPREFIX)examples
