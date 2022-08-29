@@ -3430,6 +3430,8 @@ package body GPR.Util is
    begin
       Put_Line (Tool_Name & " " & Gpr_Version_String);
 
+      Put_Line ("Built by AdaForge https://www.adaforge.org");
+
       Put ("Copyright (C) ");
       Put (Initial_Year);
       Put ('-');
@@ -3438,6 +3440,7 @@ package body GPR.Util is
       Put (Copyright_Holder);
       New_Line;
    end Display_Version;
+   
    ----------------------
    -- Ensure_Directory --
    ----------------------
